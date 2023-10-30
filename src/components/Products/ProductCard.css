@@ -1,0 +1,35 @@
+.product__card{
+    max-width: 280px;
+    background-color: white;
+    padding: 20px;
+    display: grid;
+    place-items: center;
+    gap: 10px;
+    box-shadow: 0.1px 0.1px 10px 5px #d5d5d5;
+}
+
+.product__head{
+    text-align: center;
+}
+
+.image__container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 75px;
+    min-height: 130px;
+}
+
+.product__image{
+    max-width: 100%;
+}
+
+.price{
+    font-weight: bold;
+}
+
+.product__description{
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-align: justify;
+}

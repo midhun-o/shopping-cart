@@ -1,0 +1,56 @@
+.form-container{
+    background-color: rgb(255, 255, 255);
+    max-width: 1350px;
+    margin: 50px auto;
+    display: grid;
+    justify-items: center;
+}
+
+.head{
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
+.input {
+    background-color: rgb(255, 255, 255);
+    display: grid;
+    border-radius: 5px;
+    justify-content: center;
+    row-gap: 5px;
+    padding: 75px 75px 75px 75px;
+    box-shadow: 0.1px 0.1px 5px 3px #d5d5d5;
+}
+
+.input__box {
+    height: 30px;
+    width: 250px;
+    padding: 10px 10px;
+    font-size: 15px;
+    border: none;
+    box-shadow: inset 0 0 2px rgb(104, 104, 104);
+    margin-bottom: 20px;
+}
+
+.loginBtn{
+    background-color: #28a745;
+    color: white;
+    padding: 10px 10px;
+    width: 250px;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.signup__text{
+    margin: 10px;
+}
+
+.login__noerror{
+    visibility: hidden;
+}
+
+.login__error{
+    color: red;
+}

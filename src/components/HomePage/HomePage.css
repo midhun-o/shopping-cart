@@ -1,0 +1,10 @@
+h1{
+    text-align: center;
+}
+
+.home__link{
+    display: block;
+    text-align: center;
+    font-size: 30px;
+    padding: 100px;
+}
