@@ -1,5 +1,5 @@
 .product__card{
-    max-width: 280px;
+    width: 280px;
     background-color: white;
     padding: 20px;
     display: grid;
@@ -12,7 +12,7 @@
     text-align: center;
 }
 
-.image__container{
+.productimage__container{
     display: flex;
     justify-content: center;
     align-items: center;

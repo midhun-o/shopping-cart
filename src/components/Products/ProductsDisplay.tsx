@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-import productItems from '../../utils/productData';
 import './ProductsDisplay.css';
+import axios from '../../api/axios';
 
 const ProductsDisplay: React.FC = function () {
+  const [productItems, setProductItems] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const token: string | null = localStorage.getItem('jsonwebtoken');
+        const res = await axios.get('products/getproducts?page=0', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.data.success === true) {
+          setProductItems(res.data.products);
+        }
+      } catch (error) {
+        return false;
+      }
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <div className="products__container">
-      {productItems.map((item) => {
-        const imageLink = `productImg/${item.imageLink}.jpg`;
-        return (
-          <ProductCard
-            key={item.id}
-            title={item.productName}
-            src={imageLink}
-            price={item.price}
-            description={item.productDescription}
-          />
-        );
-      })}
+      {productItems.map(
+        (item: {
+          url: string;
+          id: React.Key | null | undefined;
+          name: string;
+          price: number;
+          productDescription: string;
+        }) => {
+          const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
+          return (
+            <ProductCard
+              key={item.id}
+              title={item.name}
+              src={imageLink}
+              price={item.price}
+              description={item.productDescription}
+            />
+          );
+        }
+      )}
     </div>
   );
 };

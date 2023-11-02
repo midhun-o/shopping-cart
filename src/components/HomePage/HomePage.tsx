@@ -3,12 +3,16 @@ import './HomePage.css';
 
 const HomePage: React.FC = function () {
   return (
-    <>
-      <h1>Home Page</h1>
-      <a className="home__link" href="/login">
-        Login
-      </a>
-    </>
+    <div className="main">
+      <div className="banner-container">
+        <div className="bannerimage-container">
+          <img src="bannerimg/banner-1.png" alt="" className="banner-image" />
+        </div>
+        <a className="login-button" href="/login">
+          Login
+        </a>
+      </div>
+    </div>
   );
 };
 

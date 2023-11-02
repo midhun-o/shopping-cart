@@ -1,28 +1,48 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
 import './LoginForm.css';
 
 const LoginForm: React.FC = function () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginState, setloginState] = useState(true);
+  const [loginState, setLoginState] = useState(true);
+  const [isEmptyEmail, setIsEmptyEmail] = useState(true);
+  const [isEmptyPassword, setIsEmptyPassword] = useState(true);
 
   const navigate = useNavigate();
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    axios
-      .post('http://localhost:3001/auth/login', { email, password })
-      .then((res) => {
-        if (res.data.success === true) {
-          navigate('/products');
-        }
-      })
-      .catch((err) => {
-        if (err) {
-          setloginState(false);
-        }
+    if (email.trim().length === 0) {
+      setIsEmptyEmail(false);
+    } else {
+      setIsEmptyEmail(true);
+    }
+    if (password.trim().length === 0) {
+      setIsEmptyPassword(false);
+    } else {
+      setIsEmptyPassword(true);
+    }
+
+    try {
+      const res = await axios.post('/auth/login', {
+        email,
+        password,
       });
+      if (res.data.success === true) {
+        localStorage.setItem('jsonwebtoken', res.data.token);
+        localStorage.setItem(
+          'customerDetails',
+          JSON.stringify(res.data.customerDetails)
+        );
+        navigate('/');
+      }
+    } catch (error) {
+      if (error) {
+        setLoginState(false);
+      }
+    }
   }
   return (
     <div className="form-container">
@@ -35,6 +55,9 @@ const LoginForm: React.FC = function () {
           id="email"
           onChange={(e) => setEmail(e.target.value)}
         />
+        <div className={isEmptyEmail ? 'empty_loginEmail' : ''}>
+          <p className="email_error">Email Cannot be empty !</p>
+        </div>
         <p className="label">Password</p>
         <input
           type="text"
@@ -42,6 +65,9 @@ const LoginForm: React.FC = function () {
           id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        <div className={isEmptyPassword ? 'empty_loginPassword' : ''}>
+          <p className="email_error">Password Cannot be empty !</p>
+        </div>
         <button className="loginBtn" type="submit">
           Login
         </button>
@@ -49,7 +75,7 @@ const LoginForm: React.FC = function () {
           Invalid login details !
         </div>
         <span className="signup__text">
-          Don&apos;t have an account? <a href="#signup">Sign up</a>
+          Don&apos;t have an account? <Link to="/signup">Signup</Link>
         </span>
       </form>
     </div>
