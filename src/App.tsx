@@ -10,6 +10,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import HomeHeader from './components/Header/HomeHeader';
 import ErrorPage from './components/ErrorPage/ErrorPage';
+import SignupForm from './components/Signup/SignupForm';
 
 const App: React.FC = function () {
   return (
@@ -37,6 +38,16 @@ const App: React.FC = function () {
             </>
           }
           path="/login"
+        />
+        <Route
+          element={
+            <>
+              <HomeHeader pageName="Login" path="/login" />
+              <SignupForm />
+              <Footer />
+            </>
+          }
+          path="/signup"
         />
         <Route element={<ErrorPage />} path="*" />
       </Routes>

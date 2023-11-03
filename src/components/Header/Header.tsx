@@ -8,26 +8,28 @@ const Header: React.FC = function () {
     localStorage.removeItem('customerDetails');
   };
   return (
-    <div className="header__container">
-      <h1 className="app__title">Shopping Cart</h1>
-      <div className="navbar">
-        <ul className="nav">
-          <li>
-            <Link to="/" className="link">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/cart" className="link">
-              Cart
-            </Link>
-          </li>
-          <li>
-            <Link to="/login" className="link" onClick={handleLogout}>
-              Log out
-            </Link>
-          </li>
-        </ul>
+    <div className="header">
+      <div className="header__container">
+        <h1 className="app__title">Shopping Cart</h1>
+        <div className="navbar">
+          <ul className="nav">
+            <li>
+              <Link to="/" className="link">
+                Home
+              </Link>
+            </li>
+            <li>
+              <Link to="/cart" className="link">
+                Cart
+              </Link>
+            </li>
+            <li>
+              <Link to="/login" className="link" onClick={handleLogout}>
+                Log out
+              </Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

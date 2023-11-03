@@ -2,14 +2,14 @@ import React from 'react';
 import './ProductCard.css';
 import AddToCartButton from '../Buttons/AddToCartButton';
 
-interface Props {
+interface ProductProps {
   src: string | undefined;
   title: string;
   price: number;
   description: string;
 }
 
-const ProductCard: React.FC<Props> = function ({
+const ProductCard: React.FC<ProductProps> = function ({
   src,
   title,
   price,

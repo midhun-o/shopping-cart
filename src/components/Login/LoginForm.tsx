@@ -4,25 +4,25 @@ import axios from '../../api/axios';
 import './LoginForm.css';
 
 const LoginForm: React.FC = function () {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loginState, setLoginState] = useState(true);
-  const [isEmptyEmail, setIsEmptyEmail] = useState(true);
-  const [isEmptyPassword, setIsEmptyPassword] = useState(true);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [loginState, setLoginState] = useState<boolean>(true);
+  const [emailError, setEmailError] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
 
   const navigate = useNavigate();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (email.trim().length === 0) {
-      setIsEmptyEmail(false);
+      setEmailError('Email cant be empty');
     } else {
-      setIsEmptyEmail(true);
+      setEmailError('');
     }
     if (password.trim().length === 0) {
-      setIsEmptyPassword(false);
+      setPasswordError('Password cant be empty');
     } else {
-      setIsEmptyPassword(true);
+      setPasswordError('');
     }
 
     try {
@@ -55,9 +55,7 @@ const LoginForm: React.FC = function () {
           id="email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <div className={isEmptyEmail ? 'empty_loginEmail' : ''}>
-          <p className="email_error">Email Cannot be empty !</p>
-        </div>
+        <p className="email_error">{emailError}</p>
         <p className="label">Password</p>
         <input
           type="text"
@@ -65,9 +63,7 @@ const LoginForm: React.FC = function () {
           id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <div className={isEmptyPassword ? 'empty_loginPassword' : ''}>
-          <p className="email_error">Password Cannot be empty !</p>
-        </div>
+        <p className="email_error">{passwordError}</p>
         <button className="loginBtn" type="submit">
           Login
         </button>

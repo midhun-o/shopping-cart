@@ -4,7 +4,6 @@
     margin: 50px auto;
     display: grid;
     justify-items: center;
-    padding: 50px 0px;
 }
 
 .head{
@@ -32,7 +31,8 @@
     box-shadow: inset 0 0 2px rgb(104, 104, 104);
 }
 
-.loginBtn{
+.SignupBtn{
+    margin-top: 10px;
     background-color: #28a745;
     color: white;
     padding: 10px 10px;
@@ -44,14 +44,14 @@
 }
 
 .signup__text{
+    text-align: center;
     margin: 10px;
 }
 
-.login__noerror{
-    color: black;
-    visibility: hidden;
+.error-text{
+    color: red;
 }
 
-.login__error{
+.dataexist-error-text{
     color: red;
 }
