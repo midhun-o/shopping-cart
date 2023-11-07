@@ -5,60 +5,76 @@ import '../Login/UserForm.css';
 import FormButton from '../Buttons/FormButton';
 
 const SignupForm: React.FC = function () {
-  const [firstname, setFirstname] = useState<string>('');
-  const [lastname, setLastname] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState('');
-  const [firstnameError, setFirstnameError] = useState<string>('');
-  const [lastnameError, setLastnameError] = useState<string>('');
-  const [phoneError, setPhoneError] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
-  const [dataExistError, setDataExistError] = useState<string>('');
+  interface SignupData {
+    firstname: string;
+    lastname: string;
+    phone: number;
+    email: string;
+    password: string;
+  }
+  const [signupData, setSignupData] = useState<SignupData>({
+    firstname: '',
+    lastname: '',
+    phone: 0,
+    email: '',
+    password: '',
+  });
+  interface SignupFormError {
+    firstnameError: string;
+    lastnameError: string;
+    phoneError: string;
+    emailError: string;
+    passwordError: string;
+    dataExistError: string;
+  }
+  const [signupFormError, setSignupFormError] = useState<SignupFormError>({
+    firstnameError: '',
+    lastnameError: '',
+    phoneError: '',
+    emailError: '',
+    passwordError: '',
+    dataExistError: '',
+  });
 
   const navigate = useNavigate();
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setSignupData((values) => ({ ...values, [id]: value }));
+  };
+
+  const validateInput = () => {
+    const inputErrors = {
+      firstnameError: !signupData.firstname.trim()
+        ? 'Firstname cannot be empty'
+        : '',
+      lastnameError: !signupData.lastname.trim()
+        ? 'Lastname cannot be empty'
+        : '',
+      emailError: !signupData.email.trim() ? 'Email cannot be empty' : '',
+      passwordError: !signupData.password.trim()
+        ? 'Password cannot be empty'
+        : '',
+      phoneError: !signupData.phone ? 'Phone cannot be empty' : '',
+    };
+    setSignupFormError((error) => ({
+      ...error,
+      ...inputErrors,
+    }));
+  };
+
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (email.trim().length === 0) {
-      setEmailError('Email cant be empty');
-    } else {
-      setEmailError('');
-    }
-    if (password.trim().length === 0) {
-      setPasswordError('Password cant be empty');
-    } else {
-      setPasswordError('');
-    }
-    if (phone.trim().length === 0) {
-      setPhoneError('Phone cant be empty');
-    } else {
-      setPhoneError('');
-    }
-    if (firstname.trim().length === 0) {
-      setFirstnameError('Firstname cant be empty');
-    } else {
-      setFirstnameError('');
-    }
-    if (lastname.trim().length === 0) {
-      setLastnameError('Lastname cant be empty');
-    } else {
-      setLastnameError('');
-    }
-
+    validateInput();
     try {
-      const res = await axios.post('/auth/signup', {
-        firstname,
-        lastname,
-        phone,
-        email,
-        password,
-      });
-      if (res.data.success === true) {
+      const res = await axios.post('/auth/signup', signupData);
+      if (res.data.success) {
         navigate('/login');
-      } else if (res.data.success === false) {
-        setDataExistError(res.data.message);
+      } else {
+        setSignupFormError((error) => ({
+          ...error,
+          dataExistError: res.data.message,
+        }));
       }
     } catch (error) {
       if (error) {
@@ -75,42 +91,42 @@ const SignupForm: React.FC = function () {
           type="text"
           className="input-box"
           id="firstname"
-          onChange={(e) => setFirstname(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{firstnameError}</p>
+        <p className="input-error">{signupFormError.firstnameError}</p>
         <p className="label">Lastname</p>
         <input
           type="text"
           className="input-box"
           id="lastname"
-          onChange={(e) => setLastname(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{lastnameError}</p>
+        <p className="input-error">{signupFormError.lastnameError}</p>
         <p className="label">Phone</p>
         <input
-          type="text"
+          type="number"
           className="input-box"
           id="phone"
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{phoneError}</p>
+        <p className="input-error">{signupFormError.phoneError}</p>
         <p className="label">Email</p>
         <input
           type="email"
           className="input-box"
           id="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{emailError}</p>
+        <p className="input-error">{signupFormError.emailError}</p>
         <p className="label">Password</p>
         <input
-          type="text"
+          type="password"
           className="input-box"
           id="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{passwordError}</p>
-        <p className="result-error">{dataExistError}</p>
+        <p className="input-error">{signupFormError.passwordError}</p>
+        <p className="result-error">{signupFormError.dataExistError}</p>
         <FormButton buttonText="Sign Up" />
         <span className="signup-text">
           Already have an account? <Link to="/login">Login</Link>

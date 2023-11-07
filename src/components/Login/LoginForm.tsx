@@ -5,32 +5,51 @@ import './UserForm.css';
 import FormButton from '../Buttons/FormButton';
 
 const LoginForm: React.FC = function () {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [emailError, setEmailError] = useState<string>('');
-  const [passwordError, setPasswordError] = useState<string>('');
-  const [loginError, setLoginError] = useState<string>('');
+  interface LoginData {
+    email: string;
+    password: string;
+  }
 
+  const [loginData, setLoginData] = useState<LoginData>({
+    email: '',
+    password: '',
+  });
+
+  interface LoginFormError {
+    emailError: string;
+    passwordError: string;
+    loginError: string;
+  }
+  const [loginFormError, setLoginFormError] = useState<LoginFormError>({
+    emailError: '',
+    passwordError: '',
+    loginError: '',
+  });
   const navigate = useNavigate();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = event.target;
+    setLoginData((values) => ({ ...values, [id]: value }));
+  };
+
+  const validateInput = () => {
+    const inputErrors = {
+      emailError: !loginData.email.trim() ? 'Email cannot be empty' : '',
+      passwordError: !loginData.password.trim()
+        ? 'Password cannot be empty'
+        : '',
+    };
+    setLoginFormError((error) => ({
+      ...error,
+      ...inputErrors,
+    }));
+  };
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (email.trim().length === 0) {
-      setEmailError('Email cant be empty');
-    } else {
-      setEmailError('');
-    }
-    if (password.trim().length === 0) {
-      setPasswordError('Password cant be empty');
-    } else {
-      setPasswordError('');
-    }
-
+    validateInput();
     try {
-      const res = await axios.post('/auth/login', {
-        email,
-        password,
-      });
+      const res = await axios.post('/auth/login', loginData);
       if (res.data.success === true) {
         localStorage.setItem('jsonwebtoken', res.data.token);
         localStorage.setItem(
@@ -39,8 +58,11 @@ const LoginForm: React.FC = function () {
         );
         navigate('/');
       }
-    } catch (error) {
-      setLoginError('Invalid Login Details');
+    } catch (err) {
+      setLoginFormError((error) => ({
+        ...error,
+        loginError: 'Invalid Login Details',
+      }));
     }
   }
   return (
@@ -52,19 +74,19 @@ const LoginForm: React.FC = function () {
           type="email"
           className="input-box"
           id="email"
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{emailError}</p>
+        <p className="input-error">{loginFormError.emailError}</p>
         <p className="label">Password</p>
         <input
-          type="text"
+          type="password"
           className="input-box"
           id="password"
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={handleChange}
         />
-        <p className="input-error">{passwordError}</p>
+        <p className="input-error">{loginFormError.passwordError}</p>
         <FormButton buttonText="Login" />
-        <div className="result-error">{loginError}</div>
+        <div className="result-error">{loginFormError.loginError}</div>
         <span className="signup-text">
           Don&apos;t have an account? <Link to="/signup">Signup</Link>
         </span>

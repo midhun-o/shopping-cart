@@ -1,7 +1,7 @@
 import React from 'react';
-import './Home.css';
+import './Welcome.css';
 
-const Home: React.FC = function Home() {
+const Welcome: React.FC = function () {
   interface CustomerDetailsProps {
     first_name: string;
     last_name: string;
@@ -23,4 +23,4 @@ const Home: React.FC = function Home() {
   }
 };
 
-export default Home;
+export default Welcome;
