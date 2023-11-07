@@ -6,23 +6,16 @@ interface ProductProps {
   src: string | undefined;
   title: string;
   price: number;
-  description: string;
 }
 
-const ProductCard: React.FC<ProductProps> = function ({
-  src,
-  title,
-  price,
-  description,
-}) {
+const ProductCard: React.FC<ProductProps> = function ({ src, title, price }) {
   return (
-    <div className="product__card">
-      <h2 className="product__head">{title}</h2>
-      <div className="productimage__container">
-        <img src={src} alt="" className="product__image" />
+    <div className="product-card">
+      <h2 className="product-head">{title}</h2>
+      <div className="productimage-container">
+        <img src={src} alt="" className="product-image" />
       </div>
-      <p className="price">Price ₹{price}</p>
-      <p className="product__description">{description}</p>
+      <p className="price">Price ${price}</p>
       <AddToCartButton />
     </div>
   );

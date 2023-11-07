@@ -10,8 +10,8 @@ interface HeaderProps {
 const HomeHeader: React.FC<HeaderProps> = function ({ pageName, path }) {
   return (
     <div className="header">
-      <div className="header__container">
-        <h1 className="app__title">Shopping Cart</h1>
+      <div className="header-container">
+        <h1 className="app-title">Shopping Cart</h1>
         <div className="navbar">
           <ul className="nav">
             <li>

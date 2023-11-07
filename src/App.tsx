@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 import HomeHeader from './components/Header/HomeHeader';
 import ErrorPage from './components/ErrorPage/ErrorPage';
 import SignupForm from './components/Signup/SignupForm';
+import Banner from './components/Products/Banner';
 
 const App: React.FC = function () {
   return (
@@ -21,6 +22,7 @@ const App: React.FC = function () {
             element={
               <>
                 <Header />
+                <Banner />
                 <Home />
                 <ProductsDisplay />
                 <Footer />

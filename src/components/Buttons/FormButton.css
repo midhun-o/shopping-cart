@@ -1,13 +1,15 @@
-.addtocart-button{
+.form-button{
     background-color: #28a745;
-    border: none;
-    padding: 10px 20px;
     color: white;
+    padding: 10px 10px;
+    width: 400px;
     font-weight: bold;
+    font-size: 18px;
+    border: none;
     cursor: pointer;
 }
 
-.addtocart-button:hover{
+.form-button:hover{
     background-color: white;
     color: #28a745;
     outline: 2px solid #28a745;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
-import './SignupForm.css';
+import '../Login/UserForm.css';
+import FormButton from '../Buttons/FormButton';
 
 const SignupForm: React.FC = function () {
   const [firstname, setFirstname] = useState<string>('');
@@ -72,48 +73,46 @@ const SignupForm: React.FC = function () {
         <p className="label">Firstname</p>
         <input
           type="text"
-          className="input__box"
+          className="input-box"
           id="firstname"
           onChange={(e) => setFirstname(e.target.value)}
         />
-        <p className="error-text">{firstnameError}</p>
+        <p className="input-error">{firstnameError}</p>
         <p className="label">Lastname</p>
         <input
           type="text"
-          className="input__box"
+          className="input-box"
           id="lastname"
           onChange={(e) => setLastname(e.target.value)}
         />
-        <p className="error-text">{lastnameError}</p>
+        <p className="input-error">{lastnameError}</p>
         <p className="label">Phone</p>
         <input
           type="text"
-          className="input__box"
+          className="input-box"
           id="phone"
           onChange={(e) => setPhone(e.target.value)}
         />
-        <p className="error-text">{phoneError}</p>
+        <p className="input-error">{phoneError}</p>
         <p className="label">Email</p>
         <input
           type="email"
-          className="input__box"
+          className="input-box"
           id="email"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p className="error-text">{emailError}</p>
+        <p className="input-error">{emailError}</p>
         <p className="label">Password</p>
         <input
           type="text"
-          className="input__box"
+          className="input-box"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <p className="error-text">{passwordError}</p>
-        <p className="dataexist-error-text">{dataExistError}</p>
-        <button className="SignupBtn" type="submit">
-          Sign Up
-        </button>
-        <span className="signup__text">
+        <p className="input-error">{passwordError}</p>
+        <p className="result-error">{dataExistError}</p>
+        <FormButton buttonText="Sign Up" />
+        <span className="signup-text">
           Already have an account? <Link to="/login">Login</Link>
         </span>
       </form>

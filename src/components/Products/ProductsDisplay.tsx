@@ -25,14 +25,13 @@ const ProductsDisplay: React.FC = function () {
   }, []);
 
   return (
-    <div className="products__container">
+    <div className="products-container">
       {productItems.map(
         (item: {
           url: string;
           id: React.Key | null | undefined;
           name: string;
           price: number;
-          productDescription: string;
         }) => {
           const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
           return (
@@ -41,7 +40,6 @@ const ProductsDisplay: React.FC = function () {
               title={item.name}
               src={imageLink}
               price={item.price}
-              description={item.productDescription}
             />
           );
         }
