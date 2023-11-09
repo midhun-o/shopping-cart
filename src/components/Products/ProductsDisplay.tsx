@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ProductCard from './ProductCard';
 import './ProductsDisplay.css';
 import axios from '../../api/axios';
+import CartButtons from '../Buttons/CartButtons/CartButtons';
 
 const ProductsDisplay: React.FC = function () {
   const [productItems, setProductItems] = useState([]);
@@ -32,19 +32,17 @@ const ProductsDisplay: React.FC = function () {
           url: string;
           name: string;
           price: number;
-          quantity: number | null;
         }) => {
           const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
           return (
-            <ProductCard
-              key={item.key}
-              pid={item.id}
-              title={item.name}
-              src={imageLink}
-              price={item.price}
-              page="products"
-              quantity={null}
-            />
+            <div className="product-card" key={item.id}>
+              <h2 className="product-head">{item.name}</h2>
+              <div className="productimage-container">
+                <img src={imageLink} alt="" className="product-image" />
+              </div>
+              <p className="price">Price ${item.price}</p>
+              <CartButtons productId={item.id} />
+            </div>
           );
         }
       )}

@@ -39,3 +39,24 @@
     width: 50px;
     background-color: rgb(255, 255, 255);
 }
+
+.remove-cart-button{
+    position: absolute;
+    top: 3%;
+    right: 3%;
+    background-color: red;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.remove-cart-button:hover{
+    background-color: white;
+    color: red;
+    border: 2px solid red;
+
+}

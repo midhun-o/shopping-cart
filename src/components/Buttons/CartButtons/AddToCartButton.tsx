@@ -1,18 +1,19 @@
 import React from 'react';
 import './AddToCartButton.css';
-import { useDispatch } from 'react-redux';
-import axios from '../../api/axios';
-import { addToCart } from '../../redux/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from '../../../api/axios';
+import { addToCart } from '../../../redux/cart';
 
 interface ProductProps {
   productId: number;
 }
 
 const AddToCartButton: React.FC<ProductProps> = function ({ productId }) {
+  const { jsonwebtoken } = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   async function handleAddToCart() {
     try {
-      const token: string | null = localStorage.getItem('jsonwebtoken');
+      const token: string | null = jsonwebtoken;
       const res = await axios.post(
         `customer/addtocart/${productId}`,
         {},

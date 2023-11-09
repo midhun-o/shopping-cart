@@ -2,6 +2,9 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface CartItem {
   id: number;
+  name: string;
+  price: number;
+  url: string;
   quantity: number;
 }
 
@@ -29,9 +32,40 @@ const cartSlice = createSlice({
       newState.cartItems = action.payload;
       newState.cartCount = newState.cartItems.length;
     },
+    incrementItem: (state, action) => {
+      const productId = action.payload.id;
+      state.cartItems.forEach((item) => {
+        if (item.id === productId) {
+          const product = item;
+          product.quantity = action.payload.quantity;
+        }
+      });
+    },
+    decrementItem: (state, action) => {
+      const productId = action.payload.id;
+      state.cartItems.forEach((item) => {
+        if (item.id === productId) {
+          const product = item;
+          product.quantity = action.payload.quantity;
+        }
+      });
+    },
+    removeFromCart: (state, action) => {
+      const productId = action.payload.data;
+      const newState = state;
+      newState.cartItems = state.cartItems.filter(
+        (item) => item.id !== productId
+      );
+    },
   },
 });
 
-export const { addToCart, getCartItems } = cartSlice.actions;
+export const {
+  addToCart,
+  getCartItems,
+  incrementItem,
+  decrementItem,
+  removeFromCart,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

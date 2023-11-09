@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import ProductCard from '../Products/ProductCard';
+import CartButtons from '../Buttons/CartButtons/CartButtons';
 
 const CartPage: React.FC = function () {
   const { cartItems } = useSelector((state: any) => state.cart);
@@ -15,17 +15,16 @@ const CartPage: React.FC = function () {
           price: number;
           quantity: number;
         }) => {
-          const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
+          const cartImage = process.env.REACT_APP_BACKEND_API_URL + item.url;
           return (
-            <ProductCard
-              key={item.key}
-              pid={item.id}
-              title={item.name}
-              src={imageLink}
-              price={item.price}
-              quantity={item.quantity}
-              page="cart"
-            />
+            <div className="product-card" key={item.id}>
+              <div className="productimage-container">
+                <img src={cartImage} alt="" className="product-image" />
+              </div>
+              <h2 className="product-head">{item.name}</h2>
+              <p className="price">Price ${item.price}</p>
+              <CartButtons productId={item.id} />
+            </div>
           );
         }
       )}

@@ -1,11 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './Header.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from '../../api/axios';
+import { getCartItems } from '../../redux/cart';
 
 const Header: React.FC = function () {
   const { cartCount } = useSelector((state: any) => state.cart);
+  const dispatch = useDispatch();
 
+  async function getCartDetails() {
+    try {
+      const token: string | null = localStorage.getItem('jsonwebtoken');
+      const res = await axios.get('customer/viewcart/', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.data.success === true) {
+        dispatch(getCartItems(res.data.cartItems));
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+  getCartDetails();
   const handleLogout = () => {
     localStorage.removeItem('jsonwebtoken');
     localStorage.removeItem('customerDetails');
