@@ -1,0 +1,41 @@
+.updatecart-buttons-container{
+    display: flex;
+}
+
+.increment-button{
+    background-color: #28a745;
+    border: none;
+    width: 40px;
+    height: 40px;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.increment-button:hover{
+    background-color: #1a8232;
+}
+
+.decrement-button{
+    background-color: rgb(185, 64, 64);
+    border: none;
+    width: 40px;
+    height: 40px;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.decrement-button:hover{
+    background-color: rgb(130, 38, 26);
+}
+
+.cart-item-quantity{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    background-color: rgb(255, 255, 255);
+}

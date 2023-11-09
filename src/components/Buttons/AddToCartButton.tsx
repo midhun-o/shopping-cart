@@ -1,10 +1,39 @@
 import React from 'react';
 import './AddToCartButton.css';
+import { useDispatch } from 'react-redux';
+import axios from '../../api/axios';
+import { addToCart } from '../../redux/cart';
 
-const AddToCartButton: React.FC = function () {
+interface ProductProps {
+  productId: number;
+}
+
+const AddToCartButton: React.FC<ProductProps> = function ({ productId }) {
+  const dispatch = useDispatch();
+  async function handleAddToCart() {
+    try {
+      const token: string | null = localStorage.getItem('jsonwebtoken');
+      const res = await axios.post(
+        `customer/addtocart/${productId}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      if (res.data.success === true) {
+        dispatch(addToCart(res.data.productDetails[0]));
+      }
+    } catch (error) {
+      return false;
+    }
+  }
   return (
-    <button className="addtocart-button" type="button">
-      Add To Cart
+    <button
+      className="addtocart-button"
+      type="button"
+      onClick={handleAddToCart}
+    >
+      Add to Cart
     </button>
   );
 };

@@ -23,23 +23,27 @@ const ProductsDisplay: React.FC = function () {
 
     fetchData();
   }, []);
-
   return (
     <div className="products-container">
       {productItems.map(
         (item: {
+          key: React.Key | null | undefined;
+          id: number;
           url: string;
-          id: React.Key | null | undefined;
           name: string;
           price: number;
+          quantity: number | null;
         }) => {
           const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
           return (
             <ProductCard
-              key={item.id}
+              key={item.key}
+              pid={item.id}
               title={item.name}
               src={imageLink}
               price={item.price}
+              page="products"
+              quantity={null}
             />
           );
         }

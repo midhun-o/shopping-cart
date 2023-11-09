@@ -8,6 +8,10 @@
     box-shadow: 0.1px 0.1px 10px 5px #d5d5d5;
 }
 
+.product-card:hover{
+    transform: scale(1.02,1.02)
+}
+
 .product-head{
     text-align: center;
     min-height: 35px;
