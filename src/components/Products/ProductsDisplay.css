@@ -1,5 +1,6 @@
 .products-container{
     max-width: 1350px;
+    min-height: 80vh;
     margin: 0 auto;
     margin-top: 20px;
     display: flex;
@@ -46,4 +47,27 @@
 .price{
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+.pagination-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.pagination-buttons{
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.pagination-buttons:hover{
+    background-color: white;
+    color: #28a745;
+    outline: 2px solid  #28a745;
 }

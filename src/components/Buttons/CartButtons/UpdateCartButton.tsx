@@ -1,6 +1,7 @@
 import React from 'react';
 import './UpdateCartButton.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { AiFillDelete } from 'react-icons/ai';
 import axios from '../../../api/axios';
 import {
   incrementItem,
@@ -10,14 +11,15 @@ import {
 
 interface ProductProps {
   productId: number;
-  quantity: number;
 }
 
-const UpdateCartButton: React.FC<ProductProps> = function ({
-  productId,
-  quantity,
-}) {
+const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   const { jsonwebtoken } = useSelector((state: any) => state.user);
+  const { cartItems } = useSelector((state: any) => state.cart);
+  const productQuantity = cartItems.find(
+    (item: { id: number }) => item.id === productId
+  );
+  const quantity = productQuantity ? productQuantity.quantity : null;
   const dispatch = useDispatch();
   async function incrementCart() {
     try {
@@ -92,7 +94,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({
         type="button"
         onClick={removeCartItem}
       >
-        <i className="fa-solid fa-trash-can" />
+        <AiFillDelete />
       </button>
     </div>
   );

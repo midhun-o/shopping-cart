@@ -1,0 +1,48 @@
+.wishlist-container{
+    margin: 50px 0px;
+    display: flex;
+}
+
+.wishlist-items-container{
+    max-width: 1350px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 70vh;
+    gap: 10px;
+}
+
+.wishlist-item{
+    width: 300px;
+    background-color: white;
+    padding: 20px;
+    display: grid;
+    place-items: center;
+    gap: 10px;
+    box-shadow: 0.1px 0.1px 10px 5px #d5d5d5;
+    position: relative;
+}
+
+.cart-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.checkout-button{
+    margin: 20px;
+    background-color: orange;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    padding: 17px 100px;
+    cursor: pointer;
+}
+
+.checkout-button:hover{
+    background-color: green;
+}

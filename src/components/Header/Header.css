@@ -8,15 +8,18 @@
     height: 100px;
     max-width: 1350px;
     margin: 0 auto;
+    padding: 40px 0px;
 }
 
 .app-title{
     color: white;
     font-size: 30px;
+    font-weight:bold;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 25%;
+    text-decoration: none;
 }
 
 .navbar{

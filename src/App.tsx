@@ -7,6 +7,7 @@ import Home from './Routes/Home';
 import Login from './Routes/Login';
 import Signup from './Routes/Signup';
 import Cart from './Routes/Cart';
+import Wishlist from './Routes/Wishlist';
 
 const App: React.FC = function () {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = function () {
         <Route element={<PrivateRoutes />}>
           <Route element={<Home />} path="/" />
           <Route element={<Cart />} path="/cart" />
+          <Route element={<Wishlist />} path="/wishlist" />
         </Route>
         <Route element={<Login />} path="/login" />
         <Route element={<Signup />} path="/signup" />
