@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './ProductsDisplay.css';
+import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
 import WishlistButton from '../Buttons/WishlistButtons/WishlistButton';
 
 const ProductsDisplay: React.FC = function () {
+  const navigate = useNavigate();
   const [productItems, setProductItems] = useState([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
 
@@ -18,6 +20,10 @@ const ProductsDisplay: React.FC = function () {
 
   function nextPage() {
     setPageNumber((page) => page + 1);
+  }
+
+  function goToProduct(id: number) {
+    navigate('/product', { state: { id } });
   }
 
   useEffect(() => {
@@ -53,9 +59,13 @@ const ProductsDisplay: React.FC = function () {
               <div className="product-card" key={item.id}>
                 <WishlistButton productId={item.id} />
                 <h2 className="product-head">{item.name}</h2>
-                <div className="productimage-container">
+                <button
+                  className="productimage-container"
+                  type="button"
+                  onClick={() => goToProduct(item.id)}
+                >
                   <img src={imageLink} alt="" className="product-image" />
-                </div>
+                </button>
                 <p className="price">Price ${item.price}</p>
                 <ButtonsContainer productId={item.id} page="products" />
               </div>

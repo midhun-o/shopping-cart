@@ -8,14 +8,14 @@ import {
   decrementItem,
   removeFromCart,
 } from '../../../redux/cart';
+import { RootState } from '../../../redux/store';
 
 interface ProductProps {
   productId: number;
 }
 
 const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
-  const { jsonwebtoken } = useSelector((state: any) => state.user);
-  const { cartItems } = useSelector((state: any) => state.cart);
+  const { cartItems } = useSelector((state: RootState) => state.cart);
   const productQuantity = cartItems.find(
     (item: { id: number }) => item.id === productId
   );
@@ -23,7 +23,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   const dispatch = useDispatch();
   async function incrementCart() {
     try {
-      const token: string | null = jsonwebtoken;
+      const token: string | null = localStorage.getItem('jsonwebtoken');
       const res = await axios.post(
         `customer/increment/${productId}`,
         {},
@@ -40,7 +40,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   }
   async function decrementCart() {
     try {
-      const token: string | null = jsonwebtoken;
+      const token: string | null = localStorage.getItem('jsonwebtoken');
       const res = await axios.post(
         `customer/decrement/${productId}`,
         {},
@@ -57,7 +57,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   }
   async function removeCartItem() {
     try {
-      const token: string | null = jsonwebtoken;
+      const token: string | null = localStorage.getItem('jsonwebtoken');
       const res = await axios.post(
         `customer/removecartitem/${productId}`,
         {},
@@ -66,7 +66,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
         }
       );
       if (res.data.success === true) {
-        dispatch(removeFromCart(res.data.data[0]));
+        dispatch(removeFromCart(res.data.data));
       }
     } catch (error) {
       return false;

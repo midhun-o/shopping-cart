@@ -4,21 +4,21 @@ import { AiFillHeart } from 'react-icons/ai';
 import axios from '../../../api/axios';
 import { addToWishlist, removeFromWishlist } from '../../../redux/wishlist';
 import './WishlistButton.css';
+import { RootState } from '../../../redux/store';
 
 interface ProductProps {
   productId: number;
 }
 
 const WishlistButton: React.FC<ProductProps> = function ({ productId }) {
-  const { jsonwebtoken } = useSelector((state: any) => state.user);
-  const { wishlistItems } = useSelector((state: any) => state.wishlist);
+  const { wishlistItems } = useSelector((state: RootState) => state.wishlist);
   const itemFound = wishlistItems.find(
     (item: { id: number }) => item.id === productId
   );
   const dispatch = useDispatch();
   async function handleAddToWishlist() {
     try {
-      const token: string | null = jsonwebtoken;
+      const token: string | null = localStorage.getItem('jsonwebtoken');
       const res = await axios.post(
         `customer/addtowishlist/${productId}`,
         {},
@@ -35,7 +35,7 @@ const WishlistButton: React.FC<ProductProps> = function ({ productId }) {
   }
   async function handleRemoveFromWishlist() {
     try {
-      const token: string | null = jsonwebtoken;
+      const token: string | null = localStorage.getItem('jsonwebtoken');
       const res = await axios.post(
         `customer/removewishlist/${productId}`,
         {},
@@ -44,7 +44,7 @@ const WishlistButton: React.FC<ProductProps> = function ({ productId }) {
         }
       );
       if (res.data.success === true) {
-        dispatch(removeFromWishlist(res.data.productDetails[0]));
+        dispatch(removeFromWishlist(res.data.data));
       }
     } catch (error) {
       return false;

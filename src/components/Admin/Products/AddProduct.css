@@ -1,0 +1,57 @@
+.add-product {
+    max-width: 1350px;
+    margin: 0 auto;
+    padding: 120px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  h3 {
+    width: 30%;
+  }
+  
+  .input-container {
+    width: 70%;
+  }
+  
+  .input-field,
+  .select-field,
+  .textarea-field,
+  .file-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #d3d3d3;
+  }
+
+  
+  .submit-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #4e51ff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .submit-button:hover {
+    background-color: #2276d0;
+  }
+  
+  .message {
+    margin-top: 20px;
+    font-style: italic;
+    color: green;
+  }
+  

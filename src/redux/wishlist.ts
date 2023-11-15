@@ -27,16 +27,19 @@ const wishlistSlice = createSlice({
       newState.wishlistCount += 1;
     },
     getWishlistItems: (state, action) => {
-      const newState = state;
+      const newState = { ...state };
       newState.wishlistItems = action.payload;
       newState.wishlistCount = newState.wishlistItems.length;
+      return newState;
     },
     removeFromWishlist: (state, action) => {
-      const productId = action.payload.data;
-      const newState = state;
+      const productId: number = Number(action.payload.id);
+      const newState = { ...state };
       newState.wishlistItems = state.wishlistItems.filter(
         (item) => item.id !== productId
       );
+      newState.wishlistCount = newState.wishlistItems.length;
+      return newState;
     },
   },
 });

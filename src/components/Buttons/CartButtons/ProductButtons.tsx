@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import AddToCartButton from './AddToCartButton';
 import './ProductButtons.css';
+import { RootState } from '../../../redux/store';
 
 interface ProductProps {
   productId: number;
@@ -13,7 +14,7 @@ const ProductButtons: React.FC<ProductProps> = function ({ productId }) {
   function gotoCart() {
     navigate('/cart');
   }
-  const { cartItems } = useSelector((state: any) => state.cart);
+  const { cartItems } = useSelector((state: RootState) => state.cart);
   const productQuantity = cartItems.find(
     (item: { id: number }) => item.id === productId
   );

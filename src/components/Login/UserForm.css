@@ -4,7 +4,7 @@
     margin: 0 auto;
     display: grid;
     justify-items: center;
-    padding: 100px 0px;
+    padding: 140px 0px;
 }
 
 .head{
@@ -44,4 +44,10 @@
 
 .result-error{
     color: red;
+}
+
+.admin-login-text{
+    display: flex;
+    justify-content: center;
+    padding: 50px;
 }

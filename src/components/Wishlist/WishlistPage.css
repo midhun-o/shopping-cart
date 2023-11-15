@@ -1,6 +1,8 @@
 .wishlist-container{
-    margin: 50px 0px;
+    margin: 0 auto;
+    padding-top: 150px;
     display: flex;
+    justify-content: center;
 }
 
 .wishlist-items-container{
@@ -49,4 +51,16 @@
 
 .checkout-button:hover{
     background-color: green;
+}
+
+.empty-wishlist-image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 500px;
+    padding: 75px;
+}
+
+.empty-wishlist-image{
+    max-width: 100%;
 }

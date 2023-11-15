@@ -20,13 +20,8 @@ const HomeHeader: React.FC<HeaderProps> = function ({ pageName, path }) {
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="link">
-                Contact US
-              </Link>
-            </li>
-            <li>
-              <Link to="/about" className="link">
-                About US
+              <Link to="/admin" className="link">
+                Login as Admin
               </Link>
             </li>
           </ul>

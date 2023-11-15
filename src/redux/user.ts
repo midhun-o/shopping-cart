@@ -10,12 +10,10 @@ interface CustomerDetails {
 
 interface CustomerState {
   customerDetails: CustomerDetails | null;
-  jsonwebtoken: string | null;
 }
 
 const INITIAL_STATE: CustomerState = {
   customerDetails: null,
-  jsonwebtoken: null,
 };
 
 const userSlice = createSlice({
@@ -23,14 +21,13 @@ const userSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     login: (state, action) => {
-      const newState = state;
-      newState.customerDetails = action.payload.customerDetails;
-      newState.jsonwebtoken = action.payload.token;
+      const newState = { ...state };
+      newState.customerDetails = action.payload;
+      return newState;
     },
     logout: (state) => {
       const newState = state;
       newState.customerDetails = null;
-      newState.jsonwebtoken = null;
     },
   },
 });
