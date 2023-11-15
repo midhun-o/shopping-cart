@@ -9,6 +9,7 @@ const ProductsDisplay: React.FC = function () {
   const navigate = useNavigate();
   const [productItems, setProductItems] = useState([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
+  const [searchString, setSearchString] = useState<string>('');
 
   function previousPage() {
     if (pageNumber > 0) {
@@ -26,15 +27,23 @@ const ProductsDisplay: React.FC = function () {
     navigate('/product', { state: { id } });
   }
 
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchString(value);
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
         const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get(`products/getproducts?page=${pageNumber}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await axios.get(
+          `products/search?page=${pageNumber}&search=${searchString}`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         if (res.data.success === true) {
-          setProductItems(res.data.products);
+          setProductItems(res.data.product);
         }
       } catch (error) {
         return false;
@@ -42,13 +51,22 @@ const ProductsDisplay: React.FC = function () {
     }
 
     fetchData();
-  }, [pageNumber]);
+  }, [pageNumber, searchString]);
   return (
     <>
+      <div className="search-box-container">
+        <input
+          type="text"
+          id="search"
+          className="search-box"
+          placeholder="Search here..."
+          onChange={handleSearch}
+        />
+      </div>
       <div className="products-container">
         {productItems.map(
           (item: {
-            key: React.Key | null | undefined;
+            key: number;
             id: number;
             url: string;
             name: string;

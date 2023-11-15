@@ -48,7 +48,7 @@ const CartPage: React.FC = function () {
         <div className="empty-cart-image-container">
           <img
             src="/other/empty-cart.webp"
-            alt="e,pty wishlist"
+            alt="empty wishlist"
             className="empty-cart-image"
           />
         </div>
@@ -86,7 +86,7 @@ const CartPage: React.FC = function () {
         ''
       ) : (
         <div className="cart-details">
-          <h2>Cart Total : ${cartTotal.toFixed(2)}</h2>
+          <h2 className="cart-amount">Cart Total : ${cartTotal.toFixed(2)}</h2>
           <button
             className="checkout-button"
             type="button"

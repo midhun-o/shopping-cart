@@ -42,13 +42,13 @@ const Banner: React.FC = function () {
 
   const handlePreviousBanner = () => {
     setCurrentBanner((prevBanner) =>
-      prevBanner === 0 ? bannerObj.length - 1 : prevBanner - 1
+      prevBanner === 1 ? bannerObj.length : prevBanner - 1
     );
   };
 
   const handleNextBanner = () => {
     setCurrentBanner((prevBanner) =>
-      prevBanner === bannerObj.length - 1 ? 0 : prevBanner + 1
+      prevBanner === bannerObj.length ? 1 : prevBanner + 1
     );
   };
 
