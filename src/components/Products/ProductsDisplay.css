@@ -1,34 +1,56 @@
-.search-box-container{
-    display: flex;
-    width: 1350px;
-    margin: 0 auto;
-    background-color: rgb(242, 242, 242);
-    justify-content: center;
-    align-content: center;
-    padding: 10px 0px;
-    position: sticky;
-    top: 80px;
-    z-index: 99;
-}
-
-.search-box{
-    height: 50px;
-    width: 500px;
-    font-size: 15px;
-    padding: 0px 20px;
-    border: none;
-    border-radius: 50px;
-}
-
 .products-container{
     max-width: 1350px;
+    min-height: 600px;
     margin: 0 auto;
     display: flex;
     justify-content: center;
     align-content: baseline;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 15px 0px;
+    padding: 30px 20px;
+}
+
+.option-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1350px;
+    margin: 0 auto;
+    background-color: rgb(242, 242, 242);
+    padding: 0px 50px;
+    position: sticky;
+    top: 80px;
+    z-index: 99;
+}
+
+.filter-sort-container{
+    display: flex;
+    gap: 30px;
+}
+
+.sort-filter,
+.category-filter{
+    width: 200px;
+    padding: 12px 10px;
+    display: flex;
+    border: 1px solid rgba(203, 203, 203, 0.699);
+}
+
+.search-box-container{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 10px 0px;
+}
+
+.search-box{
+    height: 50px;
+    max-width: 500px;
+    min-width: 400px;
+    font-size: 15px;
+    padding: 0px 20px;
+    border: none;
+    border-radius: 50px;
 }
 
 .product-card{
@@ -91,8 +113,25 @@
     cursor: pointer;
 }
 
-.pagination-buttons:hover{
+.pagination-number-buttons{
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 10px 15px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.pagination-number-buttons:hover, .pagination-buttons:hover{
     background-color: white;
     color: #28a745;
     outline: 2px solid  #28a745;
 }
+
+@media (max-width: 1000px) {
+    .option-container{
+        display: flex;
+        flex-direction: column;
+    }
+  }

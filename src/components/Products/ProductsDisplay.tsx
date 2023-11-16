@@ -6,10 +6,21 @@ import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
 import WishlistButton from '../Buttons/WishlistButtons/WishlistButton';
 
 const ProductsDisplay: React.FC = function () {
+  interface Category {
+    id: number;
+    name: string;
+  }
+
   const navigate = useNavigate();
   const [productItems, setProductItems] = useState([]);
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [searchString, setSearchString] = useState<string>('');
+  const [categoryId, setCategoryId] = useState<string>('');
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [productCount, setProductCount] = useState<number>(0);
+  const [pageNumberArray, setPageNumberArray] = useState<number[]>([]);
+  const [sort, setSort] = useState<string>('p.id');
+  const [type, setType] = useState<string>('low');
 
   function previousPage() {
     if (pageNumber > 0) {
@@ -20,7 +31,13 @@ const ProductsDisplay: React.FC = function () {
   }
 
   function nextPage() {
-    setPageNumber((page) => page + 1);
+    setPageNumber((page) =>
+      page < pageNumberArray.slice(-1)[0] ? page + 1 : page
+    );
+  }
+
+  function gotoPage(gotoPageNumber: number) {
+    setPageNumber(gotoPageNumber);
   }
 
   function goToProduct(id: number) {
@@ -30,20 +47,66 @@ const ProductsDisplay: React.FC = function () {
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setSearchString(value);
+    setPageNumber(0);
   };
+
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const { value } = event.target;
+    setCategoryId(value);
+    setPageNumber(0);
+  };
+
+  const handleSortChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.target;
+    if (Number(value) === 1) {
+      setSort('p.price');
+      setType('low');
+    } else if (Number(value) === 2) {
+      setSort('p.price');
+      setType('high');
+    } else {
+      setSort('p.id');
+      setType('low');
+    }
+  };
+
+  useEffect(() => {
+    async function getcategories() {
+      try {
+        const token: string | null = localStorage.getItem('jsonwebtoken');
+        const res = await axios.get('products/getcategories', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (res.data.success === true) {
+          setCategories(res.data.category);
+        }
+      } catch (error) {
+        return false;
+      }
+    }
+
+    getcategories();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const token: string | null = localStorage.getItem('jsonwebtoken');
         const res = await axios.get(
-          `products/search?page=${pageNumber}&search=${searchString}`,
+          `products/search?page=${pageNumber}&search=${searchString}&category=${categoryId}&sort=${sort}&type=${type}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         if (res.data.success === true) {
           setProductItems(res.data.product);
+          setProductCount(res.data.productCount);
+          setPageNumberArray([]);
+          for (let i = 0; i < productCount / 8; i += 1) {
+            setPageNumberArray((values) => [...values, i]);
+          }
         }
       } catch (error) {
         return false;
@@ -51,17 +114,42 @@ const ProductsDisplay: React.FC = function () {
     }
 
     fetchData();
-  }, [pageNumber, searchString]);
+  }, [categoryId, pageNumber, productCount, searchString, sort, type]);
   return (
     <>
-      <div className="search-box-container">
-        <input
-          type="text"
-          id="search"
-          className="search-box"
-          placeholder="Search here..."
-          onChange={handleSearch}
-        />
+      <div className="option-container">
+        <div className="search-box-container">
+          <input
+            type="text"
+            id="search"
+            className="search-box"
+            placeholder="Search here..."
+            onChange={handleSearch}
+          />
+        </div>
+        <div className="filter-sort-container">
+          <select
+            id="sortId"
+            className="sort-filter"
+            onChange={handleSortChange}
+          >
+            <option value="">Sort by</option>
+            <option value="1">Price: Low to high</option>
+            <option value="2">Price: High to Low</option>
+          </select>
+          <select
+            id="categoryId"
+            onChange={handleCategoryChange}
+            className="category-filter"
+          >
+            <option value="">Select Category</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="products-container">
         {productItems.map(
@@ -82,7 +170,11 @@ const ProductsDisplay: React.FC = function () {
                   type="button"
                   onClick={() => goToProduct(item.id)}
                 >
-                  <img src={imageLink} alt="" className="product-image" />
+                  <img
+                    src={imageLink}
+                    alt={item.name}
+                    className="product-image"
+                  />
                 </button>
                 <p className="price">Price ${item.price}</p>
                 <ButtonsContainer productId={item.id} page="products" />
@@ -99,6 +191,18 @@ const ProductsDisplay: React.FC = function () {
         >
           &#60; Prev
         </button>
+        {pageNumberArray.map((number: number) => {
+          return (
+            <button
+              className="pagination-number-buttons"
+              key={number}
+              type="button"
+              onClick={() => gotoPage(number)}
+            >
+              {number + 1}
+            </button>
+          );
+        })}
         <button className="pagination-buttons" type="button" onClick={nextPage}>
           &#62; Next
         </button>
