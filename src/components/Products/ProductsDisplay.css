@@ -7,8 +7,22 @@
     align-content: baseline;
     flex-wrap: wrap;
     gap: 10px;
-    padding: 30px 20px;
+    padding: 20px;
 }
+
+.no-products-found{
+    max-width: 1350px;
+    min-height: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-products-text{
+    color: gray;
+    font-size: 30px;
+}   
 
 .option-container{
     display: flex;
@@ -49,7 +63,7 @@
     min-width: 400px;
     font-size: 15px;
     padding: 0px 20px;
-    border: none;
+    border: 1px solid rgba(139, 139, 139, 0.693);
     border-radius: 50px;
 }
 

@@ -151,46 +151,56 @@ const ProductsDisplay: React.FC = function () {
           </select>
         </div>
       </div>
-      <div className="products-container">
-        {productItems.map(
-          (item: {
-            key: number;
-            id: number;
-            url: string;
-            name: string;
-            price: number;
-          }) => {
-            const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
-            return (
-              <div className="product-card" key={item.id}>
-                <WishlistButton productId={item.id} />
-                <h2 className="product-head">{item.name}</h2>
-                <button
-                  className="productimage-container"
-                  type="button"
-                  onClick={() => goToProduct(item.id)}
-                >
-                  <img
-                    src={imageLink}
-                    alt={item.name}
-                    className="product-image"
-                  />
-                </button>
-                <p className="price">Price ${item.price}</p>
-                <ButtonsContainer productId={item.id} page="products" />
-              </div>
-            );
-          }
-        )}
-      </div>
+      {productItems.length < 1 ? (
+        <div className="no-products-found">
+          <h2 className="no-products-text">No products Found</h2>
+        </div>
+      ) : (
+        <div className="products-container">
+          {productItems.map(
+            (item: {
+              key: number;
+              id: number;
+              url: string;
+              name: string;
+              price: number;
+            }) => {
+              const imageLink =
+                process.env.REACT_APP_BACKEND_API_URL + item.url;
+              return (
+                <div className="product-card" key={item.id}>
+                  <WishlistButton productId={item.id} />
+                  <h2 className="product-head">{item.name}</h2>
+                  <button
+                    className="productimage-container"
+                    type="button"
+                    onClick={() => goToProduct(item.id)}
+                  >
+                    <img
+                      src={imageLink}
+                      alt={item.name}
+                      className="product-image"
+                    />
+                  </button>
+                  <p className="price">Price ${item.price}</p>
+                  <ButtonsContainer productId={item.id} page="products" />
+                </div>
+              );
+            }
+          )}
+        </div>
+      )}
+
       <div className="pagination-container">
-        <button
-          className="pagination-buttons"
-          type="button"
-          onClick={previousPage}
-        >
-          &#60; Prev
-        </button>
+        {pageNumber === 0 ? null : (
+          <button
+            className="pagination-buttons"
+            type="button"
+            onClick={previousPage}
+          >
+            &#60; Prev
+          </button>
+        )}
         {pageNumberArray.map((number: number) => {
           return (
             <button
@@ -203,9 +213,16 @@ const ProductsDisplay: React.FC = function () {
             </button>
           );
         })}
-        <button className="pagination-buttons" type="button" onClick={nextPage}>
-          &#62; Next
-        </button>
+        {pageNumber === pageNumberArray.slice(-1)[0] ||
+        pageNumberArray.length === 0 ? null : (
+          <button
+            className="pagination-buttons"
+            type="button"
+            onClick={nextPage}
+          >
+            Next &#62;
+          </button>
+        )}
       </div>
     </>
   );
