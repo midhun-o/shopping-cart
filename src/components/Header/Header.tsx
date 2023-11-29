@@ -35,7 +35,7 @@ const Header: React.FC = function () {
             </li>
             <li>
               <Link to="/login" className="link" onClick={handleLogout}>
-                Log out <AiOutlineLogout />
+                Log out &nbsp; <AiOutlineLogout />
               </Link>
             </li>
           </ul>
