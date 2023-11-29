@@ -1,0 +1,54 @@
+.admin-form-container {
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    padding: 170px;
+    border: 1px solid #e3e3e3;
+    background-color: #ededed;
+  }
+  
+  .admin-input {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .admin-head {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .admin-input-box {
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #c9c9c9;
+    border-radius: 3px;
+  }
+  
+  .admin-input-error {
+    color: red;
+    margin-bottom: 10px;
+  }
+  
+  .admin-result-error {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .admin-signup-text {
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .admin-signup-text a {
+    color: blue;
+    text-decoration: underline;
+  }
+  

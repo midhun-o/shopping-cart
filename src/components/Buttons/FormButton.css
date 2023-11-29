@@ -1,0 +1,16 @@
+.form-button{
+    background-color: #28a745;
+    color: white;
+    padding: 10px 10px;
+    width: 400px;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+}
+
+.form-button:hover{
+    background-color: white;
+    color: #28a745;
+    outline: 2px solid #28a745;
+}

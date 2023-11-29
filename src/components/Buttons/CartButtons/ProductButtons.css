@@ -1,0 +1,14 @@
+.item-exist-product {
+    background-color: orange;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.item-exist-product:hover{
+    background-color: white;
+    color: orange;
+    outline: 2px solid orange;
+}
