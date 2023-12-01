@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import './Banner.css';
-import axios from '../../api/axios';
+import { getBannersApi } from '../../utils/api/ApiUtil';
 
 interface BannerImage {
   id: number;
@@ -16,10 +16,7 @@ const Banner: React.FC = function () {
   useEffect(() => {
     const fetchBanner = async () => {
       try {
-        const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get('customer/fetchBannerImages', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await getBannersApi();
         setBannerObj(res.data.message);
       } catch (error) {
         return false;

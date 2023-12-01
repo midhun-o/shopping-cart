@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from '../api/axios';
-import { getWishlistItems } from '../redux/wishlist';
+import { getWishlistItems, updateError } from '../redux/wishlist';
+import { fetchWishlistApi } from '../utils/api/ApiUtil';
 
 const useFetchCartItems = () => {
   const dispatch = useDispatch();
@@ -9,15 +9,13 @@ const useFetchCartItems = () => {
   useEffect(() => {
     async function getWishlistDetails() {
       try {
-        const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get('customer/wishlist/', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await fetchWishlistApi();
         if (res.data.success === true) {
           dispatch(getWishlistItems(res.data.wishlistItems));
+          dispatch(updateError(false));
         }
       } catch (error) {
-        return false;
+        dispatch(updateError(true));
       }
     }
     getWishlistDetails();

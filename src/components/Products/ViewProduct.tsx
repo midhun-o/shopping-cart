@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ViewProduct.css';
 import { useLocation } from 'react-router-dom';
-import axios from '../../api/axios';
 import ProductButtons from '../Buttons/CartButtons/ProductButtons';
+import { getproductDetailsApi } from '../../utils/api/ApiUtil';
 
 interface Product {
   name: string;
@@ -18,19 +18,16 @@ const ViewProduct: React.FC = function () {
   const [product, setProduct] = useState<Product>();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProductDetails = async () => {
       try {
-        const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get(`products/getproducts/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await getproductDetailsApi(id);
         setProduct(res.data.product);
       } catch (error) {
         return false;
       }
     };
 
-    fetchData();
+    fetchProductDetails();
   }, [id]);
 
   return (

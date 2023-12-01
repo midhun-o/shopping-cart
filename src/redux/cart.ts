@@ -8,14 +8,24 @@ interface CartItem {
   quantity: number;
 }
 
+interface CartError {
+  getCartItemsError: boolean;
+  addToCartError: boolean;
+}
+
 interface CartState {
   cartItems: CartItem[];
   cartCount: number;
+  cartError: CartError;
 }
 
 const INITIAL_STATE: CartState = {
   cartItems: [],
   cartCount: 0,
+  cartError: {
+    getCartItemsError: false,
+    addToCartError: false,
+  },
 };
 
 const cartSlice = createSlice({
@@ -66,6 +76,11 @@ const cartSlice = createSlice({
       newState.cartCount = 0;
       return newState;
     },
+    updateError: (state, action) => {
+      const newState = { ...state };
+      newState.cartError = action.payload;
+      return newState;
+    },
   },
 });
 
@@ -76,6 +91,7 @@ export const {
   decrementItem,
   removeFromCart,
   checkout,
+  updateError,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

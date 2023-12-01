@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from '../../api/axios';
 import '../Login/UserForm.css';
 import FormButton from '../Buttons/FormButton';
+import { handleSignupApi } from '../../utils/api/ApiUtil';
 
 const SignupForm: React.FC = function () {
   interface SignupData {
@@ -67,7 +67,7 @@ const SignupForm: React.FC = function () {
     event.preventDefault();
     validateInput();
     try {
-      const res = await axios.post('/auth/signup', signupData);
+      const res = await handleSignupApi(signupData);
       if (res.data.success) {
         navigate('/login');
       } else {

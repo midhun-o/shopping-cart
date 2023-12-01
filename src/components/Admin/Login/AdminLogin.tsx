@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../../api/axios';
 import FormButton from '../../Buttons/FormButton';
 import './AdminLogin.css';
+import { handleAdminLoginApi } from '../../../utils/api/AdminApiUtil';
 
 const AdminLogin: React.FC = function () {
   interface AdminLoginData {
@@ -54,7 +54,7 @@ const AdminLogin: React.FC = function () {
     event.preventDefault();
     validateAdminInput();
     try {
-      const res = await axios.post('/admin/login', adminLoginData);
+      const res = await handleAdminLoginApi(adminLoginData);
       if (res.data.success === true) {
         localStorage.setItem('adminToken', res.data.token);
         navigate('/dashboard');

@@ -2,13 +2,17 @@ import React from 'react';
 import './UpdateCartButton.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
-import axios from '../../../api/axios';
 import {
   incrementItem,
   decrementItem,
   removeFromCart,
 } from '../../../redux/cart';
 import { RootState } from '../../../redux/store';
+import {
+  decrementCartApi,
+  incrementCartApi,
+  removeCartApi,
+} from '../../../utils/api/ApiUtil';
 
 interface ProductProps {
   productId: number;
@@ -23,14 +27,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   const dispatch = useDispatch();
   async function incrementCart() {
     try {
-      const token: string | null = localStorage.getItem('jsonwebtoken');
-      const res = await axios.post(
-        `customer/increment/${productId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await incrementCartApi(productId);
       if (res.data.success === true) {
         dispatch(incrementItem(res.data.data[0]));
       }
@@ -40,14 +37,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   }
   async function decrementCart() {
     try {
-      const token: string | null = localStorage.getItem('jsonwebtoken');
-      const res = await axios.post(
-        `customer/decrement/${productId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await decrementCartApi(productId);
       if (res.data.success === true) {
         dispatch(decrementItem(res.data.data[0]));
       }
@@ -57,14 +47,7 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
   }
   async function removeCartItem() {
     try {
-      const token: string | null = localStorage.getItem('jsonwebtoken');
-      const res = await axios.post(
-        `customer/removecartitem/${productId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await removeCartApi(productId);
       if (res.data.success === true) {
         dispatch(removeFromCart(res.data.data));
       }

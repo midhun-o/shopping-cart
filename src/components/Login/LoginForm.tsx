@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from '../../api/axios';
 import './UserForm.css';
 import FormButton from '../Buttons/FormButton';
+import { handleLoginApi } from '../../utils/api/ApiUtil';
 
 const LoginForm: React.FC = function () {
   interface LoginData {
@@ -49,7 +49,7 @@ const LoginForm: React.FC = function () {
     event.preventDefault();
     validateInput();
     try {
-      const res = await axios.post('/auth/login', loginData);
+      const res = await handleLoginApi(loginData);
       if (res.data.success === true) {
         localStorage.setItem('jsonwebtoken', res.data.token);
         localStorage.setItem(

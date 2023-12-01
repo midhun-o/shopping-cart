@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../../api/axios';
 import './ViewProducts.css';
+import {
+  deleteProductsApi,
+  getAllProductsApi,
+} from '../../../utils/api/AdminApiUtil';
 
 interface Product {
   id: number;
@@ -24,10 +27,7 @@ const ViewProducts: React.FC = function () {
 
   const fetchProducts = async () => {
     try {
-      const token: string | null = localStorage.getItem('adminToken');
-      const res = await axios.get('admin/fetchproduct', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await getAllProductsApi();
       if (res.data.success === true) {
         setProducts(res.data.products);
       }
@@ -42,10 +42,7 @@ const ViewProducts: React.FC = function () {
 
   const handleDeleteProduct = async (productId: number) => {
     try {
-      const token: string | null = localStorage.getItem('adminToken');
-      const res = await axios.delete(`admin/deleteproduct/${productId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await deleteProductsApi(productId);
       if (res.data.success === true) {
         fetchProducts();
       }

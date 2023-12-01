@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './ProductsDisplay.css';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../api/axios';
 import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
 import WishlistButton from '../Buttons/WishlistButtons/WishlistButton';
+import { fetchCategories, fetchProducts } from '../../utils/api/ApiUtil';
 
 const ProductsDisplay: React.FC = function () {
   interface Category {
@@ -75,10 +75,7 @@ const ProductsDisplay: React.FC = function () {
   useEffect(() => {
     async function getcategories() {
       try {
-        const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get('products/getcategories', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await fetchCategories();
         if (res.data.success === true) {
           setCategories(res.data.category);
         }
@@ -93,12 +90,12 @@ const ProductsDisplay: React.FC = function () {
   useEffect(() => {
     async function fetchData() {
       try {
-        const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get(
-          `products/search?page=${pageNumber}&search=${searchString}&category=${categoryId}&sort=${sort}&type=${type}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+        const res = await fetchProducts(
+          pageNumber,
+          searchString,
+          categoryId,
+          sort,
+          type
         );
         if (res.data.success === true) {
           setProductItems(res.data.product);

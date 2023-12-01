@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from '../api/axios';
-import { getCartItems } from '../redux/cart';
+import { getCartItems, updateError } from '../redux/cart';
 import { login } from '../redux/user';
+import { fetchCartApi } from '../utils/api/ApiUtil';
 
 const useFetchCartItems = () => {
   const dispatch = useDispatch();
@@ -16,15 +16,13 @@ const useFetchCartItems = () => {
           const customer = JSON.parse(customerString);
           dispatch(login(customer));
         }
-        const token: string | null = localStorage.getItem('jsonwebtoken');
-        const res = await axios.get('customer/viewcart/', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const res = await fetchCartApi();
         if (res.data.success === true) {
           dispatch(getCartItems(res.data.cartItems));
+          dispatch(updateError(false));
         }
       } catch (error) {
-        return false;
+        dispatch(updateError(true));
       }
     }
     getCartDetails();

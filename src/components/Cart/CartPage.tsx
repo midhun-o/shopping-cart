@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import './CartPage.css';
 import { useNavigate } from 'react-router-dom';
 import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
-import axios from '../../api/axios';
 import { checkout } from '../../redux/cart';
 import { RootState } from '../../redux/store';
+import { handleCheckoutApi } from '../../utils/api/ApiUtil';
 
 const CartPage: React.FC = function () {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const { cartError } = useSelector((state: RootState) => state.cart);
   const { cartItems } = useSelector((state: RootState) => state.cart);
   function goToProduct(id: number) {
     navigate('/product', { state: { id } });
@@ -25,14 +25,7 @@ const CartPage: React.FC = function () {
 
   const handleCheckout = async () => {
     try {
-      const token: string | null = localStorage.getItem('jsonwebtoken');
-      const res = await axios.post(
-        'customer/checkout',
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await handleCheckoutApi();
       if (res.data.success === true) {
         dispatch(checkout());
         navigate('/');
@@ -42,7 +35,11 @@ const CartPage: React.FC = function () {
     }
   };
 
-  return (
+  return cartError ? (
+    <div className="cart-container">
+      <h2 className="api-error-message">Error fetching data from server</h2>
+    </div>
+  ) : (
     <div className="cart-container">
       {cartLength === 0 ? (
         <div className="empty-cart-image-container">
