@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getCartItems, updateError } from '../redux/cart';
+import { getCartItems } from '../redux/cart';
 import { login } from '../redux/user';
 import { fetchCartApi } from '../utils/api/ApiUtil';
 
@@ -18,11 +18,10 @@ const useFetchCartItems = () => {
         }
         const res = await fetchCartApi();
         if (res.data.success === true) {
-          dispatch(getCartItems(res.data.cartItems));
-          dispatch(updateError(false));
+          dispatch(getCartItems({ success: true, data: res.data.cartItems }));
         }
       } catch (error) {
-        dispatch(updateError(true));
+        dispatch(getCartItems({ success: false }));
       }
     }
     getCartDetails();

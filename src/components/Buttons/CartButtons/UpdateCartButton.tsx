@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UpdateCartButton.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { AiFillDelete } from 'react-icons/ai';
@@ -19,6 +19,9 @@ interface ProductProps {
 }
 
 const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
+  const [incrementItemError, setIncrementItemError] = useState(false);
+  const [decrementItemError, setDecrementItemError] = useState(false);
+  const [removeItemError, setRemoveItemError] = useState(false);
   const { cartItems } = useSelector((state: RootState) => state.cart);
   const productQuantity = cartItems.find(
     (item: { id: number }) => item.id === productId
@@ -29,57 +32,68 @@ const UpdateCartButton: React.FC<ProductProps> = function ({ productId }) {
     try {
       const res = await incrementCartApi(productId);
       if (res.data.success === true) {
-        dispatch(incrementItem(res.data.data[0]));
+        dispatch(incrementItem({ success: true, data: res.data.data[0] }));
+        setIncrementItemError(false);
       }
     } catch (error) {
-      return false;
+      dispatch(incrementItem({ success: false }));
+      setIncrementItemError(true);
     }
   }
   async function decrementCart() {
     try {
       const res = await decrementCartApi(productId);
       if (res.data.success === true) {
-        dispatch(decrementItem(res.data.data[0]));
+        dispatch(decrementItem({ success: true, data: res.data.data[0] }));
+        setDecrementItemError(false);
       }
     } catch (error) {
-      return false;
+      dispatch(decrementItem({ success: false }));
+      setDecrementItemError(true);
     }
   }
   async function removeCartItem() {
     try {
       const res = await removeCartApi(productId);
       if (res.data.success === true) {
-        dispatch(removeFromCart(res.data.data));
+        dispatch(removeFromCart({ success: true, data: res.data.data }));
+        setRemoveItemError(false);
       }
     } catch (error) {
-      return false;
+      dispatch(removeFromCart({ success: false }));
+      setRemoveItemError(true);
     }
   }
   return (
-    <div className="updatecart-buttons-container">
-      <button
-        className="decrement-button"
-        type="button"
-        onClick={decrementCart}
-      >
-        -
-      </button>
-      <span className="cart-item-quantity">{quantity}</span>
-      <button
-        className="increment-button"
-        type="button"
-        onClick={incrementCart}
-      >
-        +
-      </button>
-      <button
-        className="remove-cart-button"
-        type="button"
-        onClick={removeCartItem}
-      >
-        <AiFillDelete />
-      </button>
-    </div>
+    <>
+      <div className="updatecart-buttons-container">
+        <button
+          className="decrement-button"
+          type="button"
+          onClick={decrementCart}
+        >
+          -
+        </button>
+        <span className="cart-item-quantity">{quantity}</span>
+        <button
+          className="increment-button"
+          type="button"
+          onClick={incrementCart}
+        >
+          +
+        </button>
+        <button
+          className="remove-cart-button"
+          type="button"
+          onClick={removeCartItem}
+        >
+          <AiFillDelete />
+        </button>
+      </div>
+      {(incrementItemError && <div>Error in Updating Cart</div>) ||
+        (decrementItemError && <div>Error in Updating Cart</div>) ||
+        (removeItemError && <div>Error in Updating Cart</div>)}
+    </>
   );
 };
 

@@ -11,12 +11,14 @@ const WishlistPage: React.FC = function () {
   function goToProduct(id: number) {
     navigate('/product', { state: { id } });
   }
-  const { wishlistError } = useSelector((state: RootState) => state.wishlist);
+  const { getWishlistItemsError } = useSelector(
+    (state: RootState) => state.wishlist.wishlistError
+  );
   const wishlistItems: WishlistItem[] = useSelector(
     (state: RootState) => state.wishlist.wishlistItems
   );
   const wishlistLength = wishlistItems.length;
-  return wishlistError ? (
+  return getWishlistItemsError ? (
     <div className="wishlist-container">
       <h2 className="api-error-message">Error fetching data from server</h2>
     </div>

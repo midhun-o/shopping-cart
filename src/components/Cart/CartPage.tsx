@@ -10,7 +10,9 @@ import { handleCheckoutApi } from '../../utils/api/ApiUtil';
 const CartPage: React.FC = function () {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { cartError } = useSelector((state: RootState) => state.cart);
+  const { getCartItemsError } = useSelector(
+    (state: RootState) => state.cart.cartError
+  );
   const { cartItems } = useSelector((state: RootState) => state.cart);
   function goToProduct(id: number) {
     navigate('/product', { state: { id } });
@@ -27,7 +29,7 @@ const CartPage: React.FC = function () {
     try {
       const res = await handleCheckoutApi();
       if (res.data.success === true) {
-        dispatch(checkout());
+        dispatch(checkout({ success: true }));
         navigate('/');
       }
     } catch (error) {
@@ -35,7 +37,7 @@ const CartPage: React.FC = function () {
     }
   };
 
-  return cartError ? (
+  return getCartItemsError ? (
     <div className="cart-container">
       <h2 className="api-error-message">Error fetching data from server</h2>
     </div>

@@ -17,7 +17,7 @@ const fetchCategories = () => {
 };
 
 const addToCartApi = (productId: number) => {
-  return axios.post(`customer/adtocart/${productId}`);
+  return axios.post(`customer/addtocart/${productId}`);
 };
 
 const incrementCartApi = (productId: number) => {
