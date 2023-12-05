@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FcNext, FcPrevious } from 'react-icons/fc';
 import './Banner.css';
-import { getBannersApi } from '../../utils/api/ApiUtil';
+import { getBannersApi } from '../../utils/api/axios';
 
 interface BannerImage {
   id: number;

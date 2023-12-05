@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 const AdminHeader: React.FC = function () {
   const handleLogout = () => {
-    localStorage.removeItem('adminToken');
+    localStorage.removeItem('jsonwebtoken');
   };
   return (
     <div className="admin-header">

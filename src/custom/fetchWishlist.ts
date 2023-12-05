@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getWishlistItems } from '../redux/wishlist';
-import { fetchWishlistApi } from '../utils/api/ApiUtil';
+import { fetchWishlistApi } from '../utils/api/axios';
 
 const useFetchCartItems = () => {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ const useFetchCartItems = () => {
           );
         }
       } catch (error) {
-        getWishlistItems({ success: false });
+        dispatch(getWishlistItems({ success: false }));
       }
     }
     getWishlistDetails();

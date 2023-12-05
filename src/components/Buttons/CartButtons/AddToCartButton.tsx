@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './AddToCartButton.css';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../../../redux/cart';
-import { addToCartApi } from '../../../utils/api/ApiUtil';
+import { addToCartApi } from '../../../utils/api/axios';
 
 interface ProductProps {
   productId: number;

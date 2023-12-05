@@ -3,7 +3,7 @@ import './ProductsDisplay.css';
 import { useNavigate } from 'react-router-dom';
 import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
 import WishlistButton from '../Buttons/WishlistButtons/WishlistButton';
-import { fetchCategories, fetchProducts } from '../../utils/api/ApiUtil';
+import { fetchCategories, fetchProducts } from '../../utils/api/axios';
 
 const ProductsDisplay: React.FC = function () {
   interface Category {

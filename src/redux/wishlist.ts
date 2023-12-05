@@ -58,11 +58,15 @@ const wishlistSlice = createSlice({
             getWishlistItemsError: false,
           },
         };
+      } else {
+        return {
+          ...state,
+          wishlistError: {
+            ...state.wishlistError,
+            getWishlistItemsError: true,
+          },
+        };
       }
-      return {
-        ...state,
-        wishlistError: { ...state.wishlistError, getWishlistItemsError: true },
-      };
     },
     removeFromWishlist: (state, action) => {
       if (action.payload.success) {

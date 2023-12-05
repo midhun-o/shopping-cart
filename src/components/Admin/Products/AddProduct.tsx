@@ -3,7 +3,7 @@ import './AddProduct.css';
 import {
   addProductsApi,
   getCategoriesAndSellerApi,
-} from '../../../utils/api/AdminApiUtil';
+} from '../../../utils/api/axios';
 
 interface Product {
   name: string;

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { getCartItems } from '../redux/cart';
 import { login } from '../redux/user';
-import { fetchCartApi } from '../utils/api/ApiUtil';
+import { fetchCartApi } from '../utils/api/axios';
 
 const useFetchCartItems = () => {
   const dispatch = useDispatch();

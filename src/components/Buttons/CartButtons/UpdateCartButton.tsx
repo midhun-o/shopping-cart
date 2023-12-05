@@ -12,7 +12,7 @@ import {
   decrementCartApi,
   incrementCartApi,
   removeCartApi,
-} from '../../../utils/api/ApiUtil';
+} from '../../../utils/api/axios';
 
 interface ProductProps {
   productId: number;

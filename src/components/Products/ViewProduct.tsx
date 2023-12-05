@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './ViewProduct.css';
 import { useLocation } from 'react-router-dom';
 import ProductButtons from '../Buttons/CartButtons/ProductButtons';
-import { getproductDetailsApi } from '../../utils/api/ApiUtil';
+import { getproductDetailsApi } from '../../utils/api/axios';
 
 interface Product {
   name: string;

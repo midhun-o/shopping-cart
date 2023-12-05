@@ -5,10 +5,7 @@ import { MdError } from 'react-icons/md';
 import { addToWishlist, removeFromWishlist } from '../../../redux/wishlist';
 import './WishlistButton.css';
 import { RootState } from '../../../redux/store';
-import {
-  addToWishlistApi,
-  removeWishlistApi,
-} from '../../../utils/api/ApiUtil';
+import { addToWishlistApi, removeWishlistApi } from '../../../utils/api/axios';
 
 interface ProductProps {
   productId: number;

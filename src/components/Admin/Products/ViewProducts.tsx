@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ViewProducts.css';
-import {
-  deleteProductsApi,
-  getAllProductsApi,
-} from '../../../utils/api/AdminApiUtil';
+import { deleteProductsApi, getAllProductsApi } from '../../../utils/api/axios';
 
 interface Product {
   id: number;

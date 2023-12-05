@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './UserForm.css';
 import FormButton from '../Buttons/FormButton';
-import { handleLoginApi } from '../../utils/api/ApiUtil';
+import { handleLoginApi } from '../../utils/api/axios';
 
 const LoginForm: React.FC = function () {
   interface LoginData {

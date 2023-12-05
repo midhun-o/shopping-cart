@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
 import { checkout } from '../../redux/cart';
 import { RootState } from '../../redux/store';
-import { handleCheckoutApi } from '../../utils/api/ApiUtil';
+import { handleCheckoutApi } from '../../utils/api/axios';
 
 const CartPage: React.FC = function () {
   const navigate = useNavigate();
