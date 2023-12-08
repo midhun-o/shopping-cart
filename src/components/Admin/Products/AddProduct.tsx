@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../../../api/axios';
 import './AddProduct.css';
+import {
+  addProductsApi,
+  getCategoriesAndSellerApi,
+} from '../../../utils/api/axios';
 
 interface Product {
   name: string;
@@ -41,10 +44,7 @@ const AddProduct: React.FC = function () {
   useEffect(() => {
     const fetchCategoryAndSeller = async () => {
       try {
-        const token: string | null = localStorage.getItem('adminToken');
-        const response = await axios.get('/admin/getcategoryandseller', {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await getCategoriesAndSellerApi();
         const [fetchedSellers, fetchedCategories] = response.data.products;
 
         setSellers(fetchedSellers);
@@ -85,13 +85,7 @@ const AddProduct: React.FC = function () {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const token: string | null = localStorage.getItem('adminToken');
-      const response = await axios.post('/admin/addproduct', product, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      const response = await addProductsApi(product);
       if (response.data.success === true) {
         setMessage('Added Item');
         setProduct({

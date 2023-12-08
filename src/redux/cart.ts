@@ -8,14 +8,32 @@ interface CartItem {
   quantity: number;
 }
 
+interface CartError {
+  getCartItemsError: boolean;
+  addToCartError: boolean;
+  incrementItemError: boolean;
+  decrementItemError: boolean;
+  removeItemError: boolean;
+  checkoutError: boolean;
+}
+
 interface CartState {
   cartItems: CartItem[];
   cartCount: number;
+  cartError: CartError;
 }
 
 const INITIAL_STATE: CartState = {
   cartItems: [],
   cartCount: 0,
+  cartError: {
+    getCartItemsError: false,
+    addToCartError: false,
+    incrementItemError: false,
+    decrementItemError: false,
+    removeItemError: false,
+    checkoutError: false,
+  },
 };
 
 const cartSlice = createSlice({
@@ -23,48 +41,107 @@ const cartSlice = createSlice({
   initialState: INITIAL_STATE,
   reducers: {
     addToCart: (state, action) => {
-      state.cartItems.push({ ...action.payload, quantity: 1 });
-      const newState = state;
-      newState.cartCount += 1;
+      if (action.payload.success) {
+        const newItem = { ...action.payload.data, quantity: 1 };
+        return {
+          ...state,
+          cartItems: [...state.cartItems, newItem],
+          cartCount: state.cartCount + 1,
+          cartError: { ...state.cartError, addToCartError: false },
+        };
+      } else {
+        return {
+          ...state,
+          cartError: { ...state.cartError, addToCartError: true },
+        };
+      }
     },
     getCartItems: (state, action) => {
-      const newState = { ...state };
-      newState.cartItems = action.payload;
-      newState.cartCount = newState.cartItems.length;
-      return newState;
+      if (action.payload.success) {
+        return {
+          ...state,
+          cartItems: action.payload.data,
+          cartCount: action.payload.data.length,
+          cartError: { ...state.cartError, getCartItemsError: false },
+        };
+      } else {
+        return {
+          ...state,
+          cartError: { ...state.cartError, getCartItemsError: true },
+        };
+      }
     },
     incrementItem: (state, action) => {
-      const productId = action.payload.id;
-      state.cartItems.forEach((item) => {
-        if (item.id === productId) {
-          const product = item;
-          product.quantity = action.payload.quantity;
-        }
-      });
+      if (action.payload.success) {
+        const updatedItems = state.cartItems.map((item) =>
+          item.id === action.payload.data.id
+            ? { ...item, quantity: action.payload.data.quantity }
+            : item
+        );
+        return {
+          ...state,
+          cartItems: updatedItems,
+          cartError: { ...state.cartError, incrementItemError: false },
+        };
+      } else {
+        return {
+          ...state,
+          cartError: { ...state.cartError, incrementItemError: true },
+        };
+      }
     },
     decrementItem: (state, action) => {
-      const productId = action.payload.id;
-      state.cartItems.forEach((item) => {
-        if (item.id === productId) {
-          const product = item;
-          product.quantity = action.payload.quantity;
-        }
-      });
+      if (action.payload.success) {
+        const updatedItems = state.cartItems.map((item) =>
+          item.id === action.payload.data.id
+            ? { ...item, quantity: action.payload.data.quantity }
+            : item
+        );
+        return {
+          ...state,
+          cartItems: updatedItems,
+          cartError: { ...state.cartError, decrementItemError: false },
+        };
+      } else {
+        return {
+          ...state,
+          cartError: { ...state.cartError, decrementItemError: true },
+        };
+      }
     },
     removeFromCart: (state, action) => {
-      const productId: number = action.payload.id;
-      const newState = { ...state };
-      newState.cartItems = state.cartItems.filter(
-        (item) => item.id !== productId
-      );
-      newState.cartCount = newState.cartItems.length;
-      return newState;
+      if (action.payload.success) {
+        const productId = action.payload.data.id;
+        const updatedCartItems = state.cartItems.filter(
+          (item) => item.id !== productId
+        );
+        return {
+          ...state,
+          cartItems: updatedCartItems,
+          cartCount: updatedCartItems.length,
+          cartError: { ...state.cartError, removeItemError: false },
+        };
+      } else {
+        return {
+          ...state,
+          cartError: { ...state.cartError, removeItemError: true },
+        };
+      }
     },
-    checkout: (state) => {
-      const newState = { ...state };
-      newState.cartItems = [];
-      newState.cartCount = 0;
-      return newState;
+    checkout: (state, action) => {
+      if (action.payload.success) {
+        return {
+          ...state,
+          cartItems: [],
+          cartCount: 0,
+          cartError: { ...state.cartError, checkoutError: false },
+        };
+      } else {
+        return {
+          ...state,
+          cartError: { ...state.cartError, checkoutError: true },
+        };
+      }
     },
   },
 });

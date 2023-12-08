@@ -3,15 +3,26 @@ import { useSelector } from 'react-redux';
 import './WishlistPage.css';
 import { useNavigate } from 'react-router-dom';
 import WishlistButton from '../Buttons/WishlistButtons/WishlistButton';
+import { RootState } from '../../redux/store';
+import { WishlistItem } from '../../redux/wishlist';
 
 const WishlistPage: React.FC = function () {
   const navigate = useNavigate();
   function goToProduct(id: number) {
     navigate('/product', { state: { id } });
   }
-  const { wishlistItems } = useSelector((state: any) => state.wishlist);
+  const { getWishlistItemsError } = useSelector(
+    (state: RootState) => state.wishlist.wishlistError
+  );
+  const wishlistItems: WishlistItem[] = useSelector(
+    (state: RootState) => state.wishlist.wishlistItems
+  );
   const wishlistLength = wishlistItems.length;
-  return (
+  return getWishlistItemsError ? (
+    <div className="wishlist-container">
+      <h2 className="api-error-message">Error fetching data from server</h2>
+    </div>
+  ) : (
     <div className="wishlist-container">
       {wishlistLength === 0 ? (
         <div className="empty-wishlist-image-container">
@@ -25,7 +36,6 @@ const WishlistPage: React.FC = function () {
         <div className="wishlist-items-container">
           {wishlistItems.map(
             (item: {
-              key: React.Key | null | undefined;
               id: number;
               url: string;
               name: string;

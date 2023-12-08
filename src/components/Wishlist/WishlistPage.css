@@ -3,6 +3,7 @@
     padding: 150px 0px 100px 0px;
     display: flex;
     justify-content: center;
+    min-height: 90vh;
 }
 
 .wishlist-items-container{

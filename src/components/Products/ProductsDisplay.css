@@ -39,7 +39,9 @@
 
 .filter-sort-container{
     display: flex;
-    gap: 30px;
+    column-gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .sort-filter,
@@ -148,4 +150,8 @@
         display: flex;
         flex-direction: column;
     }
+    .search-box{
+        min-width: 300px;
+    }
   }
+  

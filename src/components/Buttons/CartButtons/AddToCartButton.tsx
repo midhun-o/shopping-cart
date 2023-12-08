@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AddToCartButton.css';
 import { useDispatch } from 'react-redux';
-import axios from '../../../api/axios';
 import { addToCart } from '../../../redux/cart';
+import { addToCartApi } from '../../../utils/api/axios';
 
 interface ProductProps {
   productId: number;
@@ -10,21 +10,19 @@ interface ProductProps {
 
 const AddToCartButton: React.FC<ProductProps> = function ({ productId }) {
   const dispatch = useDispatch();
+  const [showError, setShowError] = useState<boolean>(false);
   async function handleAddToCart() {
     try {
-      const token: string | null = localStorage.getItem('jsonwebtoken');
-      const res = await axios.post(
-        `customer/addtocart/${productId}`,
-        {},
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const res = await addToCartApi(productId);
       if (res.data.success === true) {
-        dispatch(addToCart(res.data.productDetails[0]));
+        dispatch(
+          addToCart({ success: true, data: res.data.productDetails[0] })
+        );
+        setShowError(false);
       }
     } catch (error) {
-      return false;
+      dispatch(addToCart({ success: false }));
+      setShowError(true);
     }
   }
   return (
@@ -33,7 +31,7 @@ const AddToCartButton: React.FC<ProductProps> = function ({ productId }) {
       type="button"
       onClick={handleAddToCart}
     >
-      Add to Cart
+      {showError ? 'Retry' : 'Add To Cart'}
     </button>
   );
 };

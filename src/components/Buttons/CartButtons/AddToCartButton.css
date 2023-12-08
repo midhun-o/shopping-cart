@@ -1,6 +1,7 @@
 .addtocart-button{
     background-color: #28a745;
     border: none;
+    width: 120px;
     padding: 10px 20px;
     color: white;
     font-weight: bold;
