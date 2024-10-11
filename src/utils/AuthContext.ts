@@ -1,10 +1,7 @@
-const Authorization = () => {
-  const isAuthenticated: string | null = localStorage.getItem('jsonwebtoken');
-  const customer: string | null = localStorage.getItem('customerDetails');
-  if (!isAuthenticated) {
-    return {};
-  }
+const useAuth = () => {
+  const isAuthenticated = !!localStorage.getItem('jsonwebtoken');
+  const customer = JSON.parse(localStorage.getItem('customerDetails') || '{}');
   return { isAuthenticated, customer };
 };
 
-export default Authorization;
+export default useAuth;
