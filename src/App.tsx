@@ -9,16 +9,13 @@ import Signup from './Routes/Signup';
 import Cart from './Routes/Cart';
 import Wishlist from './Routes/Wishlist';
 import Product from './Routes/Product';
-import useFetchCartItems from './custom/fetchCart';
-import useFetchWishlistItems from './custom/fetchWishlist';
 import AdminLogin from './Routes/AdminRoutes/AdminLogin';
 import Dashboard from './Routes/AdminRoutes/Dashboard';
 import AddProductPage from './Routes/AdminRoutes/AddProductPage';
 import AdminRoutes from './utils/AdminRoutes';
 
 const App: React.FC = function () {
-  useFetchCartItems();
-  useFetchWishlistItems();
+
   return (
     <BrowserRouter>
       <Routes>
