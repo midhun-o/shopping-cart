@@ -1,10 +1,11 @@
 import React from 'react';
-import './Footer.css';
 
 const Footer: React.FC = function () {
   return (
-    <footer>
-      <p className="footer-text">Copyright &copy; shopping-cart.com</p>
+    <footer className="bg-gray-800 text-white h-[10vh] flex items-center justify-center">
+      <p className="text-center text-sm sm:text-base md:text-md lg:text-md">
+        Copyright &copy; {new Date().getFullYear()} easy-cart.com
+      </p>
     </footer>
   );
 };
