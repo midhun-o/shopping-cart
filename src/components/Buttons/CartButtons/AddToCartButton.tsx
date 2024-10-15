@@ -1,5 +1,4 @@
 import React from 'react';
-import './AddToCartButton.css';
 import { useDispatch } from 'react-redux';
 import axios from '../../../api/axios';
 import { addToCart } from '../../../redux/cart';
@@ -8,8 +7,9 @@ interface ProductProps {
   productId: number;
 }
 
-const AddToCartButton: React.FC<ProductProps> = function ({ productId }) {
+const AddToCartButton: React.FC<ProductProps> = ({ productId }) => {
   const dispatch = useDispatch();
+
   async function handleAddToCart() {
     try {
       const token: string | null = localStorage.getItem('jsonwebtoken');
@@ -24,12 +24,12 @@ const AddToCartButton: React.FC<ProductProps> = function ({ productId }) {
         dispatch(addToCart(res.data.productDetails[0]));
       }
     } catch (error) {
-      return false;
     }
   }
+
   return (
     <button
-      className="addtocart-button"
+      className="bg-green-600 text-white font-bold py-2 px-4 rounded-md cursor-pointer hover:bg-white hover:text-green-600 hover:outline hover:outline-2 hover:outline-green-600"
       type="button"
       onClick={handleAddToCart}
     >

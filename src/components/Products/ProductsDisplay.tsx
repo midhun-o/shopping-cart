@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './ProductsDisplay.css';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
 import ButtonsContainer from '../Buttons/CartButtons/ButtonsContainer';
@@ -25,8 +24,6 @@ const ProductsDisplay: React.FC = function () {
   function previousPage() {
     if (pageNumber > 0) {
       setPageNumber((page) => page - 1);
-    } else {
-      setPageNumber(0);
     }
   }
 
@@ -115,108 +112,101 @@ const ProductsDisplay: React.FC = function () {
 
     fetchData();
   }, [categoryId, pageNumber, productCount, searchString, sort, type]);
+
   return (
     <>
-      <div className="option-container">
-        <div className="search-box-container">
-          <input
-            type="text"
-            id="search"
-            className="search-box"
-            placeholder="Search here..."
-            onChange={handleSearch}
-          />
-        </div>
-        <div className="filter-sort-container">
-          <select
-            id="sortId"
-            className="sort-filter"
-            onChange={handleSortChange}
-          >
-            <option value="">Sort by</option>
-            <option value="1">Price: Low to high</option>
-            <option value="2">Price: High to Low</option>
-          </select>
-          <select
-            id="categoryId"
-            onChange={handleCategoryChange}
-            className="category-filter"
-          >
-            <option value="">Select Category</option>
-            {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+<div className="flex flex-wrap items-center justify-between max-w-full mx-auto bg-gray-200 sticky top-24 z-10 p-4 gap-4">
+  <div className="w-full lg:w-auto">
+    <input
+      type="text"
+      id="search"
+      className="h-12 w-full lg:w-[500px] text-sm px-5 border border-gray-400 rounded-full"
+      placeholder="Search here..."
+      onChange={handleSearch}
+    />
+  </div>
+
+  <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 w-full lg:w-auto">
+    <select
+      id="sortId"
+      className="w-full lg:w-52 h-12 p-3 border border-gray-400 rounded-md"
+      onChange={handleSortChange}
+    >
+      <option value="">Sort by</option>
+      <option value="1">Price: Low to high</option>
+      <option value="2">Price: High to Low</option>
+    </select>
+
+    <select
+      id="categoryId"
+      className="w-full lg:w-52 h-12 p-3 border border-gray-400 rounded-md"
+      onChange={handleCategoryChange}
+    >
+      <option value="">Select Category</option>
+      {categories.map((category) => (
+        <option key={category.id} value={category.id}>
+          {category.name}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
+
+
       {productItems.length < 1 ? (
-        <div className="no-products-found">
-          <h2 className="no-products-text">No products Found</h2>
+        <div className="flex items-center justify-center max-w-screen-xl mx-auto min-h-[600px]">
+          <h2 className="text-gray-500 text-3xl">No products Found</h2>
         </div>
       ) : (
-        <div className="products-container">
-          {productItems.map(
-            (item: {
-              key: number;
-              id: number;
-              url: string;
-              name: string;
-              price: number;
-            }) => {
-              const imageLink =
-                process.env.REACT_APP_BACKEND_API_URL + item.url;
-              return (
-                <div className="product-card" key={item.id}>
-                  <WishlistButton productId={item.id} />
-                  <h2 className="product-head">{item.name}</h2>
-                  <button
-                    className="productimage-container"
-                    type="button"
-                    onClick={() => goToProduct(item.id)}
-                  >
-                    <img
-                      src={imageLink}
-                      alt={item.name}
-                      className="product-image"
-                    />
-                  </button>
-                  <p className="price">Price ${item.price}</p>
-                  <ButtonsContainer productId={item.id} page="products" />
-                </div>
-              );
-            }
-          )}
+        <div className="max-w-screen-xl min-h-[600px] mx-auto flex flex-wrap justify-center items-baseline gap-2 p-5">
+          {productItems.map((item: { id: number; url: string; name: string; price: number; }) => {
+            const imageLink = process.env.REACT_APP_BACKEND_API_URL + item.url;
+            return (
+              <div className="w-[300px] h-[300px] bg-white p-5 flex flex-col items-center gap-2 shadow-md hover:scale-105 transition-transform duration-200" key={item.id}>
+                <WishlistButton productId={item.id} />
+                <h2 className="text-lg text-center">{item.name}</h2>
+                <button
+                  className="flex justify-center items-center w-[75px] h-[75px] cursor-pointer"
+                  type="button"
+                  onClick={() => goToProduct(item.id)}
+                >
+                  <img
+                    src={imageLink}
+                    alt={item.name}
+                    className="max-w-full h-24 object-cover"
+                  />
+                </button>
+                <p className="font-bold mt-3">Price ${item.price}</p>
+                <ButtonsContainer productId={item.id} page="products" />
+              </div>
+            );
+          })}
         </div>
       )}
 
-      <div className="pagination-container">
-        {pageNumber === 0 ? null : (
+      <div className="flex justify-center items-center mb-5">
+        {pageNumber > 0 && (
           <button
-            className="pagination-buttons"
+            className="bg-green-500 text-white font-bold py-2 px-4 mx-2 cursor-pointer"
             type="button"
             onClick={previousPage}
           >
             &#60; Prev
           </button>
         )}
-        {pageNumberArray.map((number: number) => {
-          return (
-            <button
-              className="pagination-number-buttons"
-              key={number}
-              type="button"
-              onClick={() => gotoPage(number)}
-            >
-              {number + 1}
-            </button>
-          );
-        })}
-        {pageNumber === pageNumberArray.slice(-1)[0] ||
-        pageNumberArray.length === 0 ? null : (
+        {pageNumberArray.map((number: number) => (
           <button
-            className="pagination-buttons"
+            className="bg-green-500 text-white font-bold py-2 px-4 mx-2 cursor-pointer"
+            key={number}
+            type="button"
+            onClick={() => gotoPage(number)}
+          >
+            {number + 1}
+          </button>
+        ))}
+        {pageNumber < pageNumberArray.slice(-1)[0] && pageNumberArray.length > 0 && (
+          <button
+            className="bg-green-500 text-white font-bold py-2 px-4 mx-2 cursor-pointer"
             type="button"
             onClick={nextPage}
           >
